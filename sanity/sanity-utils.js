@@ -2,6 +2,12 @@ import { createClient, groq } from "next-sanity";
 
 import clientConfig from "./config/client-config";
 
+// export async function getProducts() {
+//   return createClient(clientConfig).fetch(groq`*[_type == "product"]`);
+// }
+// export async function getBanner() {
+//   return createClient(clientConfig).fetch(groq`*[_type == "banner"]`);
+// }
 export async function getProducts() {
   return createClient(clientConfig).fetch(
     groq`*[_type == "product"]{
@@ -9,7 +15,7 @@ export async function getProducts() {
       _createdAt,
       name,
       "slug": slug.current,
-      "image": image.asset->url,
+      "images": image[].asset->url,
       price,
       details
     }`
@@ -21,8 +27,6 @@ export async function getBanner() {
     groq`*[_type == "banner"]{
       _id,
       _createdAt,
-      name,
-      "slug": slug.current,
       "image": image.asset->url,
       buttonText,
       product,
